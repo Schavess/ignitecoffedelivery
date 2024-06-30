@@ -6,6 +6,7 @@ import {
   Text,
   View,
   SectionList,
+  // ScrollView,
 } from 'native-base'
 import { useEffect, useRef, useState } from 'react'
 
@@ -212,116 +213,118 @@ export function Home() {
         barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'}
         translucent
       />
-
-      <Animated.View entering={SlideInUp.duration(500)}>
-        <Animated.View
-          style={[
-            headerAnimatedStyles,
-            {
-              paddingTop: 44,
-              zIndex: 999,
-            },
-          ]}
-        >
-          <Header
-            variant={'Location'}
-            introContainerPosition={introContainerPosition}
-          />
-        </Animated.View>
-
-        <Animated.View
-          style={[
-            introContainerAnimatedStyles,
-            {
-              height: 270,
-              backgroundColor: THEME.colors.GRAY100,
-            },
-          ]}
-        >
-          <Search
-            search={search}
-            setSearch={setSearch}
-            isSearching={isSearching}
-            onPress={getLoadingData}
-          />
-
-          <HStack marginRight={1} justifyContent={'flex-end'} marginTop={-5}>
-            <CoffeGrainSvg />
-          </HStack>
-        </Animated.View>
-
-        <Animated.View entering={SlideInRight.duration(1000)}>
-          <Center marginTop={-112}>
-            <Carousel coffees={dataCarrousel} />
-          </Center>
-        </Animated.View>
-
-        <GestureDetector gesture={onPanUp}>
-          <View>
-            <Animated.View
-              style={[
-                coffeeFilterContainerAnimatedStyles,
-                {
-                  paddingHorizontal: 32,
-                  paddingTop: 16,
-                  paddingBottom: 12,
-                },
-              ]}
-            >
-              <Text
-                fontFamily={THEME.fontFamily.Baloo2.BOLD}
-                fontSize={THEME.fontSize.TITLE.SM}
-                color={THEME.colors.GRAY300}
-              >
-                Nossos cafés
-              </Text>
-
-              <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
-                {dataCoffee.map((item) => (
-                  <CategoryButtonTag
-                    key={item.title}
-                    text={item.title}
-                    isActive={item.title === selectedCategory}
-                    onPress={() => handleScrollToSection(item.title)}
-                  />
-                ))}
-              </View>
-            </Animated.View>
-
-            <SectionList
-              ref={sectionListRef}
-              sections={listSection}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item }) => (
-                <CoffeeCardHorizontal
-                  name={item.name}
-                  description={item.description}
-                  price={item.price}
-                  image={item.image}
-                  onPress={() => handleGoToDetails(item.id)}
-                />
-              )}
-              contentContainerStyle={{
-                paddingHorizontal: 32,
-                alignSelf: 'center',
-                marginBottom: 38,
-                marginTop: -32,
-                paddingBottom: 488,
-              }}
-              renderSectionHeader={({ section: { title } }) => (
-                <Text
-                  color={THEME.colors.GRAY400}
-                  fontFamily={THEME.fontFamily.Baloo2.BOLD}
-                  fontSize={THEME.fontSize.TITLE.XS}
-                  marginTop={12}
-                >
-                  {title}
-                </Text>
-              )}
+      <Animated.View style={{ flex: 1 }}>
+        <Animated.View entering={SlideInUp.duration(500)}>
+          <Animated.View
+            style={[
+              headerAnimatedStyles,
+              {
+                paddingTop: 44,
+                zIndex: 999,
+              },
+            ]}
+          >
+            <Header
+              variant={'Location'}
+              introContainerPosition={introContainerPosition}
             />
-          </View>
-        </GestureDetector>
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              introContainerAnimatedStyles,
+              {
+                height: 270,
+                backgroundColor: THEME.colors.GRAY100,
+              },
+            ]}
+          >
+            <Search
+              search={search}
+              setSearch={setSearch}
+              isSearching={isSearching}
+              onPress={getLoadingData}
+            />
+
+            <HStack marginRight={1} justifyContent={'flex-end'} marginTop={-5}>
+              <CoffeGrainSvg />
+            </HStack>
+          </Animated.View>
+
+          <Animated.View entering={SlideInRight.duration(1000)}>
+            <Center marginTop={-112}>
+              <Carousel coffees={dataCarrousel} />
+            </Center>
+          </Animated.View>
+
+          <GestureDetector gesture={onPanUp}>
+            <View>
+              <Animated.View
+                style={[
+                  coffeeFilterContainerAnimatedStyles,
+                  {
+                    paddingHorizontal: 32,
+                    paddingTop: 16,
+                    paddingBottom: 12,
+                  },
+                ]}
+              >
+                <Text
+                  fontFamily={THEME.fontFamily.Baloo2.BOLD}
+                  fontSize={THEME.fontSize.TITLE.SM}
+                  color={THEME.colors.GRAY300}
+                >
+                  Nossos cafés
+                </Text>
+
+                <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
+                  {dataCoffee.map((item) => (
+                    <CategoryButtonTag
+                      key={item.title}
+                      text={item.title}
+                      isActive={item.title === selectedCategory}
+                      onPress={() => handleScrollToSection(item.title)}
+                    />
+                  ))}
+                </View>
+              </Animated.View>
+
+              <SectionList
+                ref={sectionListRef}
+                sections={listSection}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.name}
+                renderItem={({ item }) => (
+                  <CoffeeCardHorizontal
+                    name={item.name}
+                    description={item.description}
+                    price={item.price}
+                    image={item.image}
+                    onPress={() => handleGoToDetails(item.id)}
+                  />
+                )}
+                contentContainerStyle={{
+                  paddingHorizontal: 32,
+                  alignSelf: 'center',
+                  marginBottom: 38,
+                  marginTop: -32,
+                  paddingBottom: 488,
+                }}
+                renderSectionHeader={({ section: { title } }) => (
+                  <Text
+                    color={THEME.colors.GRAY400}
+                    fontFamily={THEME.fontFamily.Baloo2.BOLD}
+                    fontSize={THEME.fontSize.TITLE.XS}
+                    marginTop={12}
+                  >
+                    {title}
+                  </Text>
+                )}
+                style={{ flexGrow: 1 }}
+              />
+            </View>
+          </GestureDetector>
+        </Animated.View>
       </Animated.View>
     </VStack>
   )
